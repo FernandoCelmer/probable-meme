@@ -1,9 +1,7 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"net/http"
+	"github.com/FernandoCelmer/probable-meme/src/handlers"
 
 	web "github.com/FernandoCelmer/api.go/src"
 )
@@ -15,17 +13,9 @@ func main() {
 		web.Version("0.1.0"),
 	)
 
-	app.Get("/item", itemHandler)
+	app.Post("/clientes/{id}/transacoes", handlers.ClientTransacoesHandler)
+	app.Get("/clientes/{id}/extrato", handlers.ClientesExtratoHandler)
 
 	app.Run(web.Port(8080))
-}
 
-type Response struct {
-	Message string `json:"message"`
-}
-
-func itemHandler(w http.ResponseWriter, r *http.Request) {
-	data := Response{Message: "Item"}
-	response, _ := json.Marshal(data)
-	fmt.Fprintf(w, string(response))
 }
